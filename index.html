@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тест скорости фильтрации</title>
+  </head>
+  <body>
+    <input type="text" id="input" />
+
+    <script type="module">
+      import getFile from './getTodos.js';
+
+      const TODOS = await getFile('./todos.json');
+
+      const inputNode = document.getElementById('input');
+
+      let res = 0;
+      inputNode.addEventListener('input', (e) => {
+        const arr = [
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1,
+        ];
+
+        const begin = new Date().getTime();
+        for (let i = 0; i < arr.length; i++) {
+          // filter(TODOS, e.target.value);
+
+          // map(TODOS, e.target.value);
+
+          // console.log(foreach(TODOS, e.target.value));
+
+          forOnly(TODOS, e.target.value);
+        }
+        const end = new Date().getTime();
+
+        res += end - begin;
+
+        console.log(res);
+      });
+
+      function filter(array, str) {
+        return array.filter((obj) => {
+          return condition(obj.title, str);
+        });
+      }
+
+      function map(array, str) {
+        return array.map((obj) => {
+          if (condition(obj.title, str)) {
+            return obj;
+          }
+        });
+      }
+
+      function foreach(array, str) {
+        const newArr = [];
+        array.forEach((obj) => {
+          if (condition(obj.title, str)) {
+            newArr.push(obj);
+          }
+        });
+        return newArr;
+      }
+
+      function forOnly(array, str) {
+        const newArr = [];
+        for (let i = 0; i < array.length; i++) {
+          if (condition(array[i].title, str)) {
+            newArr.push(array[i]);
+          }
+        }
+        return newArr;
+      }
+
+      function condition(title, str) {
+        // return Boolean(title.indexOf(str) + 1);
+        // return Boolean(title.includes(str));
+        // const re = RegExp(str);
+        // return Boolean(re.test(title));
+        // return Boolean(title.search(re));
+        // return Boolean(title.match(re));
+      }
+    </script>
+  </body>
+</html>
